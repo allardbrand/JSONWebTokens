@@ -1,7 +1,7 @@
 # JSON Web Tokens
 Module for generating, verifying and decoding JSON Web Tokens (JWT). JWT is an open standard (RFC 7519) that defines a compact and self-contained way for securely transmitting information between parties as a JSON object. This information can be verified and trusted because it is digitally signed.
 
-Anyone can verify a JWT token and inspect a JWT token to see its content. However, to modify the content, one should know the secret that has been used to create and sign the token.
+Anyone can verify a JWT token and inspect a JWT token to see its content. However, to modify the content, one should know the secret that has been used to create and sign the token. 
 
 Please see https://jwt.io/ and/or https://jwt.io/introduction/ for more information about JWT.
 
@@ -18,7 +18,7 @@ Example scenario for creating secure deeplinks:
 
 You can also combine step 4 and 5 by using an error handler on the 'Decode single claim' action. Whenever you try to decode a single claim for an invalid token, an exception will be raised. You could use the error handler flow to handle invalid tokens.
 
-The main advantage of using JWT for deeplinks is that it is not possible for the end-user to edit a deeplink. Since the deeplink is digitally signed by using a JWT token, any modifications to the deeplink will be identified.
+The main advantage of using JWT for deeplinks is that it is not possible for the end-user to edit a deeplink. Since the token is signed, you can verify that the content hasn't been tampered with.
 
 You can validate your tokens (and the token used in the example above) on https://jwt.io/.
 
