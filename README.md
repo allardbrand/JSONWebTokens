@@ -1,12 +1,14 @@
 # JSON Web Tokens
 Module for generating, verifying and decoding JSON Web Tokens (JWT). JWT is an open standard (RFC 7519) that defines a compact and self-contained way for securely transmitting information between parties as a JSON object. This information can be verified and trusted because it is digitally signed.
 
+Everyone can verify a JWT token and see its content. However, to modify the content, one should know the secret that has been used to create and sign the token.
+
 Please see https://jwt.io/ and/or https://jwt.io/introduction/ for more information about JWT.
 
 # Typical usage scenario
-Authentication, Deeplinks
+Authentication, Securing deeplinks
 
-Example scenario for use in deeplinks: 
+Example scenario for creating secure deeplinks: 
 1) Make sure the entity you want to deeplink to has an unique number or guid
 2) Use the 'Generate token' action to generate a token for this number. In other words: for a customer with unique number 12345, create a token with the claim 'customer' = 12345. The corresponding JWT token would be: eyJhbGciOiJIUzI1NiJ9.eyJjdXN0b21lciI6IjEyMzQ1In0.1luA-mT4GdwihX0o0XLZcG9maEv5MZCxAyqfBgkTfnc
 3) Set-up a deeplink which accepts a string parameter for the JWT token. Make sure to configure the deeplink to include the GET parameter. A valid deeplink example for the previous token could be: http://localhost:8080/link/jwt-deeplink/eyJhbGciOiJIUzI1NiJ9.eyJjdXN0b21lciI6IjEyMzQ1In0.1luA-mT4GdwihX0o0XLZcG9maEv5MZCxAyqfBgkTfnc 
@@ -15,6 +17,8 @@ Example scenario for use in deeplinks:
 6) In the deeplink microflow, retrieve the entity using the unique number from the decoded claim
 
 You can also combine step 4 and 5 by using an error handler on the 'Decode single claim' action. Whenever you try to decode a single claim for an invalid token, an exception will be raised. You could use the error handler flow to handle invalid tokens.
+
+The main advantage of using JWT for deeplinks is that it is not possible for the end-user to edit a deeplink. Since the deeplink is digitally signed by using a JWT token, any modifications to the deeplink will be identified.
 
 You can validate your tokens (and the token used in the example above) on https://jwt.io/.
 
