@@ -1,5 +1,5 @@
 # JSON Web Tokens
-Module for generating, verifying and decoding JSON Web Tokens (JWT). JSON Web Tokens are an open, industry standard RFC 7519 method for representing claims securely between two parties.
+Module for generating, verifying and decoding JSON Web Tokens (JWT). JSON Web Tokens are an open, industry standard RFC 7519 method for representing claims securely between two parties. 
 
 Please see https://jwt.io/ for more information about JWT.
 
@@ -20,3 +20,6 @@ Currently only the HMAC based algorithms are supported (see list below). RSA bas
 
 # Dependencies
 Mendix 6.8.1 or higher
+
+# Copyright
+Based on https://github.com/auth0/java-jwt by Auth0 (http://www.auth0.com)
