@@ -1,7 +1,7 @@
 # JSON Web Tokens
 Module for generating, verifying and decoding JSON Web Tokens (JWT). JWT is an open standard (RFC 7519) that defines a compact and self-contained way for securely transmitting information between parties as a JSON object. This information can be verified and trusted because it is digitally signed.
 
-Everyone can verify a JWT token and see its content. However, to modify the content, one should know the secret that has been used to create and sign the token.
+Everyone can verify a JWT token and inspect a JWT token to see its content. However, to modify the content, one should know the secret that has been used to create and sign the token.
 
 Please see https://jwt.io/ and/or https://jwt.io/introduction/ for more information about JWT.
 
