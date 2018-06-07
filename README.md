@@ -33,9 +33,9 @@ Currently only the following algorithms are supported:
 - HMAC with SHA-256
 - HMAC with SHA-384
 - HMAC with SHA-512
-- RSA with SHA-256* 
+- RSA with SHA-256\* 
 
-* = RSA with SHA-256 can currently be used for decoding JWT tokens only. When using the RS256 algorithm, provide the public key as the secret. The public key should be provided as the Base64 encoded version of the DER representation of the X509 certificate. This corresponds to the PEM encoding of the certificate without the '-----BEGIN CERTIFICATE-----' and '-----END CERTIFICATE-----' header and footer, and with any newline characters removed.
+\* = RSA with SHA-256 can currently be used for decoding JWT tokens only. When using the RS256 algorithm, provide the public key as the secret. The public key should be provided as the Base64 encoded version of the DER representation of the X509 certificate. This corresponds to the PEM encoding of the certificate without the '-----BEGIN CERTIFICATE-----' and '-----END CERTIFICATE-----' header and footer, and with any newline characters removed.
 
 # Dependencies
 Mendix 6.8.1 or higher
