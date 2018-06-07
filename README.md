@@ -29,10 +29,11 @@ Module features:
 - Decode full JWT token
 - Decode a single claim from a JWT token
 
-Currently only the HMAC based algorithms are supported (see list below). RSA based algorithms will be added later.
+Currently only the following algorithms are supported:
 - HMAC with SHA-256
 - HMAC with SHA-384
 - HMAC with SHA-512
+- RSA with SHA-256 (decoding only)
 
 # Dependencies
 Mendix 6.8.1 or higher
