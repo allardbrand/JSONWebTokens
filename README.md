@@ -26,8 +26,9 @@ You can validate your tokens (and the token used in the example above) on https:
 Module features:
 - Generate a JWT token
 - Verify a JWT token
-- Decode full JWT token
+- Decode a full JWT token
 - Decode a single claim from a JWT token
+- Decode a single header claim from a JWT token
 
 Currently only the following algorithms are supported:
 - HMAC with SHA-256
