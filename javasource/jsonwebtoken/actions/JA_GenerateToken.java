@@ -19,7 +19,10 @@ import com.mendix.systemwideinterfaces.core.IContext;
 import com.mendix.systemwideinterfaces.core.IMendixObject;
 import com.mendix.webui.CustomJavaAction;
 import jsonwebtoken.helper.AlgorithmHelper;
+import jsonwebtoken.proxies.ArrayValue;
 import jsonwebtoken.proxies.Claim;
+import jsonwebtoken.proxies.Enum_Algorithm;
+import jsonwebtoken.proxies.Enum_ClaimValueType;
 
 public class JA_GenerateToken extends CustomJavaAction<String>
 {
@@ -57,27 +60,62 @@ public class JA_GenerateToken extends CustomJavaAction<String>
 			return result;
 		}
 		
-		// Get subject
-		String subject = this.tokenObject.getSubject();
-		
+		// Check for attempts to generate a token using the RS256 algorithm, which
+		// is not possible in the current implementation
+		if (this.algorithm == Enum_Algorithm.RS256) {
+			Core.getLogger(logNode).warn("The RS256 algorithm can currently only be used to verify and/or decode a token");
+			return result;
+		}
+				
 		// Get expiration date
 		Date expiresAt = this.tokenObject.getExpiresAt();
+		
+		// Get not valid before date
+		Date notBefore = this.tokenObject.getNotValidBefore();
 		
 		try {
 			// Create new token using token builder
 		    Builder tokenBuilder = JWT.create();
-		    
-		    // Optionally add subject
-		    if (subject != null) tokenBuilder.withSubject(subject);
-		    
+		    	    
 		    // Optionally add expiration date
 		    if (expiresAt != null) tokenBuilder.withExpiresAt(expiresAt);
+		    
+		    // Optionally add not before date
+		    if (notBefore != null) tokenBuilder.withNotBefore(notBefore);
 		    
 		    // Add claims
 		    List<IMendixObject> claimList = Core.retrieveByPath(getContext(), this.__tokenObject, "JSONWebToken.Claim_Token");
 		    for (IMendixObject iteratorClaim : claimList) {
 				Claim claim = Claim.initialize(getContext(), iteratorClaim);
-				tokenBuilder.withClaim(claim.getName(), claim.getValue());
+				
+				// Get claim type
+				Enum_ClaimValueType valueType = claim.getValueType();
+				
+				if (valueType.equals(Enum_ClaimValueType.String)) {
+					tokenBuilder.withClaim(claim.getName(), claim.getStringValue());
+				} else if (valueType.equals(Enum_ClaimValueType.Integer)) {
+					tokenBuilder.withClaim(claim.getName(), claim.getIntegerValue());
+				} else if (valueType.equals(Enum_ClaimValueType.Array)) {
+					List<IMendixObject> arrayValueList = Core.retrieveByPath(getContext(), claim.getMendixObject(), "JSONWebToken.ArrayValue_Claim");
+				    
+					// Loop over the ArrayValue objects and create a String array so that
+					// we can add this as an JWT array claim
+					if (arrayValueList != null && arrayValueList.size() > 0) {
+						String[] valueArray = new String[arrayValueList.size()];
+						int arrayIndex = 0;
+						
+						for (IMendixObject iteratorArrayValue : arrayValueList) {
+							ArrayValue arrayValue = ArrayValue.initialize(getContext(), iteratorArrayValue);
+							valueArray[arrayIndex] = arrayValue.getValue();
+							arrayIndex++;
+					    }
+					    
+						// Add the array as claim
+						tokenBuilder.withArrayClaim(claim.getName(), valueArray);
+					}		
+				} else {
+					Core.getLogger(logNode).warn("No valid value type provided for claim " + claim.getName());
+				}
 			}
 		    
 		    // Sign and store token

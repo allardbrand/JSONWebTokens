@@ -21,7 +21,9 @@ public class VerifyToken
 	public enum MemberNames
 	{
 		Token("Token"),
-		ClaimName("ClaimName");
+		Secret("Secret"),
+		ClaimName("ClaimName"),
+		Algorithm("Algorithm");
 
 		private java.lang.String metaName;
 
@@ -145,6 +147,42 @@ public class VerifyToken
 	}
 
 	/**
+	 * @return value of Secret
+	 */
+	public final String getSecret()
+	{
+		return getSecret(getContext());
+	}
+
+	/**
+	 * @param context
+	 * @return value of Secret
+	 */
+	public final String getSecret(com.mendix.systemwideinterfaces.core.IContext context)
+	{
+		return (String) getMendixObject().getValue(context, MemberNames.Secret.toString());
+	}
+
+	/**
+	 * Set value of Secret
+	 * @param secret
+	 */
+	public final void setSecret(String secret)
+	{
+		setSecret(getContext(), secret);
+	}
+
+	/**
+	 * Set value of Secret
+	 * @param context
+	 * @param secret
+	 */
+	public final void setSecret(com.mendix.systemwideinterfaces.core.IContext context, String secret)
+	{
+		getMendixObject().setValue(context, MemberNames.Secret.toString(), secret);
+	}
+
+	/**
 	 * @return value of ClaimName
 	 */
 	public final String getClaimName()
@@ -178,6 +216,50 @@ public class VerifyToken
 	public final void setClaimName(com.mendix.systemwideinterfaces.core.IContext context, String claimname)
 	{
 		getMendixObject().setValue(context, MemberNames.ClaimName.toString(), claimname);
+	}
+
+	/**
+	 * Set value of Algorithm
+	 * @param algorithm
+	 */
+	public final jsonwebtoken.proxies.Enum_Algorithm getAlgorithm()
+	{
+		return getAlgorithm(getContext());
+	}
+
+	/**
+	 * @param context
+	 * @return value of Algorithm
+	 */
+	public final jsonwebtoken.proxies.Enum_Algorithm getAlgorithm(com.mendix.systemwideinterfaces.core.IContext context)
+	{
+		Object obj = getMendixObject().getValue(context, MemberNames.Algorithm.toString());
+		if (obj == null)
+			return null;
+
+		return jsonwebtoken.proxies.Enum_Algorithm.valueOf((java.lang.String) obj);
+	}
+
+	/**
+	 * Set value of Algorithm
+	 * @param algorithm
+	 */
+	public final void setAlgorithm(jsonwebtoken.proxies.Enum_Algorithm algorithm)
+	{
+		setAlgorithm(getContext(), algorithm);
+	}
+
+	/**
+	 * Set value of Algorithm
+	 * @param context
+	 * @param algorithm
+	 */
+	public final void setAlgorithm(com.mendix.systemwideinterfaces.core.IContext context, jsonwebtoken.proxies.Enum_Algorithm algorithm)
+	{
+		if (algorithm != null)
+			getMendixObject().setValue(context, MemberNames.Algorithm.toString(), algorithm.toString());
+		else
+			getMendixObject().setValue(context, MemberNames.Algorithm.toString(), null);
 	}
 
 	/**

@@ -52,6 +52,19 @@ public class Microflows
 			throw new MendixRuntimeException(e);
 		}
 	}
+	public static void mB_VerifyToken_GetHeaderClaim(IContext context, jsonwebtokentest.proxies.VerifyToken _verifyToken)
+	{
+		try
+		{
+			Map<String, Object> params = new HashMap<String, Object>();
+			params.put("VerifyToken", _verifyToken == null ? null : _verifyToken.getMendixObject());
+			Core.execute(context, "JSONWebTokenTest.MB_VerifyToken_GetHeaderClaim", params);
+		}
+		catch (CoreException e)
+		{
+			throw new MendixRuntimeException(e);
+		}
+	}
 	public static void mB_VerifyToken_GetSingleClaim(IContext context, jsonwebtokentest.proxies.VerifyToken _verifyToken)
 	{
 		try

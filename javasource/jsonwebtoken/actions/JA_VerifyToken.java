@@ -9,6 +9,7 @@
 
 package jsonwebtoken.actions;
 
+import java.io.UnsupportedEncodingException;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.exceptions.JWTVerificationException;
@@ -50,6 +51,9 @@ public class JA_VerifyToken extends CustomJavaAction<Boolean>
 		    
 		    // Verify token
 		    verifier.verify(this.token);
+		} catch (IllegalArgumentException | UnsupportedEncodingException e) {
+			Core.getLogger(logNode).warn("Could not create token verifier");
+			throw e; 
 		} catch (JWTVerificationException exception){
 			// Token was invalid, return false
 		    return false;

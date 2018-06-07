@@ -47,6 +47,7 @@ public class UserActionsRegistrar implements EventHandler
 			component.actionRegistry().registerUserAction(deeplink.actions.ReadMicroflows.class);
 			component.actionRegistry().registerUserAction(deeplink.actions.StartDeeplinkJava.class);
 			component.actionRegistry().registerUserAction(jsonwebtoken.actions.JA_DecodeClaim.class);
+			component.actionRegistry().registerUserAction(jsonwebtoken.actions.JA_DecodeHeaderClaim.class);
 			component.actionRegistry().registerUserAction(jsonwebtoken.actions.JA_DecodeToken.class);
 			component.actionRegistry().registerUserAction(jsonwebtoken.actions.JA_GenerateToken.class);
 			component.actionRegistry().registerUserAction(jsonwebtoken.actions.JA_VerifyToken.class);

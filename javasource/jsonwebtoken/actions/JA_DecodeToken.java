@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
@@ -22,6 +23,8 @@ import com.mendix.systemwideinterfaces.core.IContext;
 import com.mendix.systemwideinterfaces.core.IMendixObject;
 import com.mendix.webui.CustomJavaAction;
 import jsonwebtoken.helper.AlgorithmHelper;
+import jsonwebtoken.proxies.ArrayValue;
+import jsonwebtoken.proxies.Enum_ClaimValueType;
 import jsonwebtoken.proxies.Token;
 
 public class JA_DecodeToken extends CustomJavaAction<IMendixObject>
@@ -59,8 +62,11 @@ public class JA_DecodeToken extends CustomJavaAction<IMendixObject>
 		    // Verify token (raises exception if token is invalid)
 		    DecodedJWT jwt = verifier.verify(this.token);
 			
-		    // Get and store subject
-		    newTokenObject.setSubject(jwt.getSubject());
+		    // Get and store expiration date
+		    newTokenObject.setExpiresAt(jwt.getExpiresAt());
+		    
+		    // Get and store not valid before date
+		    newTokenObject.setNotValidBefore(jwt.getNotBefore());
 		    
 		    // Get claims
 		    Map<String, Claim> claims = jwt.getClaims();
@@ -74,11 +80,60 @@ public class JA_DecodeToken extends CustomJavaAction<IMendixObject>
 			    	// If claim is available, store the claim into a new Claim object
 			    	// and link it to the decoded token (both Mendix objects)
 			    	if (claim != null && !claim.isNull()) {
-			    		jsonwebtoken.proxies.Claim newClaimObject = new jsonwebtoken.proxies.Claim(getContext());
+			    		String claimKey = claimEntry.getKey();
 			    		
-				    	newClaimObject.setClaim_Token(newTokenObject);
-				    	newClaimObject.setName(claimEntry.getKey());
-				    	newClaimObject.setValue(claim.asString());
+			    		// Do not process the expiration date and not valid before as separate claims 
+			    		// since they have already been processed as part of the token
+			    		if (!"nbf".equals(claimKey) && !"exp".equals(claimKey)) {
+			    			
+			    			// Create new Claim object
+				    		jsonwebtoken.proxies.Claim newClaimObject = new jsonwebtoken.proxies.Claim(getContext());
+				    		newClaimObject.setClaim_Token(newTokenObject);
+					    	newClaimObject.setName(claimEntry.getKey());
+					    	
+				    		// First try to process claim as string
+				    		String stringResult = claim.asString();
+				    						    		
+				    		if (stringResult != null) {
+				    			newClaimObject.setValueType(Enum_ClaimValueType.String);
+				    			newClaimObject.setStringValue(stringResult);
+				    		} else {
+				    			// If result is null, the claim was not a string, try to
+					    		// process the claim as an integer
+				    			Integer intResult = claim.asInt();
+				    			
+				    			if (intResult != null) {
+				    				// Convert integer to string value
+				    				stringResult = intResult.toString();
+				    				
+				    				newClaimObject.setValueType(Enum_ClaimValueType.Integer);
+				    				newClaimObject.setIntegerValue(intResult);
+				    				
+				    				// Store the integer as string value as well
+				    				newClaimObject.setStringValue(stringResult);
+				    			}
+				    		}
+				    		
+				    		// If result is still null, the claim was not an integer 
+				    		// either, try to process the claim as an array
+				    		if (stringResult == null) {		    			
+				    			try {
+				    				String[] resultArray = claim.asArray(String.class);
+					    			newClaimObject.setValueType(Enum_ClaimValueType.Array);
+					    			
+					    			// For each value in the result array, create an ArrayValue
+					    			// object and add this to the newClaimObject
+				    				for (String string : resultArray) {
+				    					ArrayValue arrayValue = new ArrayValue(getContext());
+				    					
+				    					arrayValue.setValue(string);
+				    					arrayValue.setArrayValue_Claim(newClaimObject);
+									}
+				    			} catch (Exception e) {
+				    				Core.getLogger(logNode).warn("Could not decode claim " + claimKey + ": " + e.getMessage());
+				    			}
+				    		}
+			    		}
 			    	}
 			    }
 		    }		    

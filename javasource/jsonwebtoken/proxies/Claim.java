@@ -21,7 +21,9 @@ public class Claim
 	public enum MemberNames
 	{
 		Name("Name"),
-		Value("Value"),
+		ValueType("ValueType"),
+		StringValue("StringValue"),
+		IntegerValue("IntegerValue"),
 		Claim_Token("JSONWebToken.Claim_Token");
 
 		private java.lang.String metaName;
@@ -146,39 +148,119 @@ public class Claim
 	}
 
 	/**
-	 * @return value of Value
+	 * Set value of ValueType
+	 * @param valuetype
 	 */
-	public final String getValue()
+	public final jsonwebtoken.proxies.Enum_ClaimValueType getValueType()
 	{
-		return getValue(getContext());
+		return getValueType(getContext());
 	}
 
 	/**
 	 * @param context
-	 * @return value of Value
+	 * @return value of ValueType
 	 */
-	public final String getValue(com.mendix.systemwideinterfaces.core.IContext context)
+	public final jsonwebtoken.proxies.Enum_ClaimValueType getValueType(com.mendix.systemwideinterfaces.core.IContext context)
 	{
-		return (String) getMendixObject().getValue(context, MemberNames.Value.toString());
+		Object obj = getMendixObject().getValue(context, MemberNames.ValueType.toString());
+		if (obj == null)
+			return null;
+
+		return jsonwebtoken.proxies.Enum_ClaimValueType.valueOf((java.lang.String) obj);
 	}
 
 	/**
-	 * Set value of Value
-	 * @param value
+	 * Set value of ValueType
+	 * @param valuetype
 	 */
-	public final void setValue(String value)
+	public final void setValueType(jsonwebtoken.proxies.Enum_ClaimValueType valuetype)
 	{
-		setValue(getContext(), value);
+		setValueType(getContext(), valuetype);
 	}
 
 	/**
-	 * Set value of Value
+	 * Set value of ValueType
 	 * @param context
-	 * @param value
+	 * @param valuetype
 	 */
-	public final void setValue(com.mendix.systemwideinterfaces.core.IContext context, String value)
+	public final void setValueType(com.mendix.systemwideinterfaces.core.IContext context, jsonwebtoken.proxies.Enum_ClaimValueType valuetype)
 	{
-		getMendixObject().setValue(context, MemberNames.Value.toString(), value);
+		if (valuetype != null)
+			getMendixObject().setValue(context, MemberNames.ValueType.toString(), valuetype.toString());
+		else
+			getMendixObject().setValue(context, MemberNames.ValueType.toString(), null);
+	}
+
+	/**
+	 * @return value of StringValue
+	 */
+	public final String getStringValue()
+	{
+		return getStringValue(getContext());
+	}
+
+	/**
+	 * @param context
+	 * @return value of StringValue
+	 */
+	public final String getStringValue(com.mendix.systemwideinterfaces.core.IContext context)
+	{
+		return (String) getMendixObject().getValue(context, MemberNames.StringValue.toString());
+	}
+
+	/**
+	 * Set value of StringValue
+	 * @param stringvalue
+	 */
+	public final void setStringValue(String stringvalue)
+	{
+		setStringValue(getContext(), stringvalue);
+	}
+
+	/**
+	 * Set value of StringValue
+	 * @param context
+	 * @param stringvalue
+	 */
+	public final void setStringValue(com.mendix.systemwideinterfaces.core.IContext context, String stringvalue)
+	{
+		getMendixObject().setValue(context, MemberNames.StringValue.toString(), stringvalue);
+	}
+
+	/**
+	 * @return value of IntegerValue
+	 */
+	public final Integer getIntegerValue()
+	{
+		return getIntegerValue(getContext());
+	}
+
+	/**
+	 * @param context
+	 * @return value of IntegerValue
+	 */
+	public final Integer getIntegerValue(com.mendix.systemwideinterfaces.core.IContext context)
+	{
+		return (Integer) getMendixObject().getValue(context, MemberNames.IntegerValue.toString());
+	}
+
+	/**
+	 * Set value of IntegerValue
+	 * @param integervalue
+	 */
+	public final void setIntegerValue(Integer integervalue)
+	{
+		setIntegerValue(getContext(), integervalue);
+	}
+
+	/**
+	 * Set value of IntegerValue
+	 * @param context
+	 * @param integervalue
+	 */
+	public final void setIntegerValue(com.mendix.systemwideinterfaces.core.IContext context, Integer integervalue)
+	{
+		getMendixObject().setValue(context, MemberNames.IntegerValue.toString(), integervalue);
 	}
 
 	/**

@@ -4,16 +4,15 @@
 
 package jsonwebtoken.proxies;
 
-public enum Enum_Algorithm
+public enum Enum_ClaimValueType
 {
-	HS256(new String[][] { new String[] { "en_US", "HMAC with SHA-256" } }),
-	HS384(new String[][] { new String[] { "en_US", "HMAC with SHA-384" } }),
-	HS512(new String[][] { new String[] { "en_US", "HMAC with SHA-512" } }),
-	RS256(new String[][] { new String[] { "en_US", "RSA with SHA-256" } });
+	String(new String[][] { new String[] { "en_US", "String" } }),
+	Integer(new String[][] { new String[] { "en_US", "Integer" } }),
+	Array(new String[][] { new String[] { "en_US", "Array" } });
 
 	private java.util.Map<String,String> captions;
 
-	private Enum_Algorithm(String[][] captionStrings)
+	private Enum_ClaimValueType(String[][] captionStrings)
 	{
 		this.captions = new java.util.HashMap<String,String>();
 		for (String[] captionString : captionStrings)

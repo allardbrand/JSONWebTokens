@@ -39,6 +39,20 @@ public class Microflows
 			throw new MendixRuntimeException(e);
 		}
 	}
+	public static void sUB_DecodeHeaderClaim(IContext context, String _claimName, String _tokenString)
+	{
+		try
+		{
+			Map<String, Object> params = new HashMap<String, Object>();
+			params.put("ClaimName", _claimName);
+			params.put("TokenString", _tokenString);
+			Core.execute(context, "JSONWebToken.SUB_DecodeHeaderClaim", params);
+		}
+		catch (CoreException e)
+		{
+			throw new MendixRuntimeException(e);
+		}
+	}
 	public static void sUB_DecodeSingleClaim(IContext context, String _tokenString, String _secret, String _claimName, jsonwebtoken.proxies.Enum_Algorithm _algorithm)
 	{
 		try

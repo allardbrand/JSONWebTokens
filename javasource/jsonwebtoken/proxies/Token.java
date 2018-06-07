@@ -20,7 +20,7 @@ public class Token
 	 */
 	public enum MemberNames
 	{
-		Subject("Subject"),
+		NotValidBefore("NotValidBefore"),
 		ExpiresAt("ExpiresAt");
 
 		private java.lang.String metaName;
@@ -109,39 +109,39 @@ public class Token
 		com.mendix.core.Core.delete(context, getMendixObject());
 	}
 	/**
-	 * @return value of Subject
+	 * @return value of NotValidBefore
 	 */
-	public final String getSubject()
+	public final java.util.Date getNotValidBefore()
 	{
-		return getSubject(getContext());
+		return getNotValidBefore(getContext());
 	}
 
 	/**
 	 * @param context
-	 * @return value of Subject
+	 * @return value of NotValidBefore
 	 */
-	public final String getSubject(com.mendix.systemwideinterfaces.core.IContext context)
+	public final java.util.Date getNotValidBefore(com.mendix.systemwideinterfaces.core.IContext context)
 	{
-		return (String) getMendixObject().getValue(context, MemberNames.Subject.toString());
+		return (java.util.Date) getMendixObject().getValue(context, MemberNames.NotValidBefore.toString());
 	}
 
 	/**
-	 * Set value of Subject
-	 * @param subject
+	 * Set value of NotValidBefore
+	 * @param notvalidbefore
 	 */
-	public final void setSubject(String subject)
+	public final void setNotValidBefore(java.util.Date notvalidbefore)
 	{
-		setSubject(getContext(), subject);
+		setNotValidBefore(getContext(), notvalidbefore);
 	}
 
 	/**
-	 * Set value of Subject
+	 * Set value of NotValidBefore
 	 * @param context
-	 * @param subject
+	 * @param notvalidbefore
 	 */
-	public final void setSubject(com.mendix.systemwideinterfaces.core.IContext context, String subject)
+	public final void setNotValidBefore(com.mendix.systemwideinterfaces.core.IContext context, java.util.Date notvalidbefore)
 	{
-		getMendixObject().setValue(context, MemberNames.Subject.toString(), subject);
+		getMendixObject().setValue(context, MemberNames.NotValidBefore.toString(), notvalidbefore);
 	}
 
 	/**

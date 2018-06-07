@@ -10,8 +10,8 @@ public class Constants
 {
 	// These are the constants for the JSONWebTokenTest module
 
-	public static String getJWT_Secret()
+	public static String getSecret()
 	{
-		return (String)Core.getConfiguration().getConstantValue("JSONWebTokenTest.JWT_Secret");
+		return (String)Core.getConfiguration().getConstantValue("JSONWebTokenTest.Secret");
 	}
 }
