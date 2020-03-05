@@ -2,20 +2,15 @@ package jsonwebtoken.helper;
 
 import java.io.ByteArrayInputStream;
 import java.io.UnsupportedEncodingException;
-import java.security.KeyFactory;
-import java.security.PublicKey;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
-import java.security.interfaces.RSAKey;
 import java.security.interfaces.RSAPublicKey;
-import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
 
 import com.auth0.jwt.algorithms.Algorithm;
 import com.mendix.core.Core;
 
 import jsonwebtoken.proxies.Enum_Algorithm;
-import sun.misc.BASE64Decoder;
 
 public class AlgorithmHelper {
 	public static Algorithm Algorithm(Enum_Algorithm enumAlgorithm, String secret) 
